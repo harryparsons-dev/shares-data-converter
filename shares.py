@@ -6,6 +6,7 @@ import datetime
 import os
 import yfinance as yf
 import math
+import matplotlib.pyplot as plt
 
 
 def highlight_values(x):
@@ -76,17 +77,33 @@ for csv in files:
     df["Gain/Loss %"] = df["Gain/Loss %"].str.rstrip("%").astype('float')
 
     df["Day Gain/Loss"] = df["Day Gain/Loss"].str.rstrip("£")
-
+    sectors = {}
     # Iterating through the column using iteritems
     for column_name, column_data in df.items():
         if column_name == 'Symbol':
+
             for value in column_data:
-                print(value + ": " + getSector(value))
+                if not pd.isna(value):
+                    sector  = getSector(str(value))
+
+                    if sector in sectors:
+                        sectors[sector] +=1
+                    else:
+                        sectors[sector] = 1
 
 
 
+    print(sectors)
+    labels = []
+    size = []
+    for sector, count in sectors.items():
+        labels.append(sector)
+        size.append(size)
 
 
+    plt.pie(size, labels=labels)
+    plt.axis('equal')
+    plt.show()
     df =df.sort_values(["Gain/Loss %"], ascending=False)
 
 
