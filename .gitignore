@@ -1,4 +1,6 @@
 build
 dist
 venv
-script.ipynb
+.pdf
+.csv
+.vscode
